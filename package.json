@@ -1,8 +1,14 @@
 {
-  "name": "eurojourney",
-  "version": "1.0.0",
-  "description": "AI-powered Europe travel planner",
+  "name": "travelnest",
+  "version": "2.0.0",
+  "description": "AI-powered trip planner for anywhere in the world — no login, no database, Claude does everything",
   "main": "server.js",
-  "scripts": { "start": "node server.js", "dev": "node server.js" },
-  "dependencies": { "@anthropic-ai/sdk": "^0.36.3", "express": "^4.18.2" }
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.36.3",
+    "express": "^4.18.2"
+  }
 }
