@@ -3,78 +3,182 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EuroJourney — AI-Powered Europe Travel Planner</title>
+  <title>TravelNest — AI Trip Planner for Anywhere in the World</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" defer></script>
   <style>
+    /* ─── Reset & Base ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --blue: #2563eb; --blue-d: #1d4ed8; --blue-l: #eff6ff;
-      --teal: #0d9488; --amber: #d97706; --red: #dc2626; --green: #16a34a;
-      --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
-      --gray-400: #9ca3af; --gray-600: #4b5563; --gray-700: #374151;
-      --gray-800: #1f2937; --gray-900: #111827;
-      --radius: 12px;
-      --shadow: 0 4px 24px rgba(0,0,0,.10);
+      --violet:  #7c3aed;
+      --violet-d:#6d28d9;
+      --violet-l:#f5f3ff;
+      --sky:     #0ea5e9;
+      --amber:   #d97706;
+      --red:     #dc2626;
+      --green:   #16a34a;
+      --gray-50: #f9fafb;
+      --gray-100:#f3f4f6;
+      --gray-200:#e5e7eb;
+      --gray-400:#9ca3af;
+      --gray-600:#4b5563;
+      --gray-700:#374151;
+      --gray-800:#1f2937;
+      --gray-900:#111827;
+      --radius:  12px;
+      --shadow:  0 4px 24px rgba(0,0,0,.10);
       --shadow-lg: 0 12px 48px rgba(0,0,0,.15);
+
+      /* alias so existing references still work */
+      --blue:   var(--violet);
+      --blue-d: var(--violet-d);
+      --blue-l: var(--violet-l);
+      --teal:   var(--sky);
     }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.6; min-height: 100vh; }
-    .hero { background: linear-gradient(135deg, #1e40af 0%, #0f766e 100%); color: #fff; padding: 0; position: relative; overflow: hidden; }
-    .nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; position: relative; z-index: 1; }
-    .logo { display: flex; align-items: center; gap: 10px; font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .nav-badge { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: 4px 14px; font-size: .8rem; }
-    .hero-content { text-align: center; padding: 60px 24px 80px; position: relative; z-index: 1; }
-    .hero-eyebrow { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); border-radius: 20px; padding: 5px 16px; font-size: .85rem; margin-bottom: 24px; }
-    .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.15; margin-bottom: 20px; text-shadow: 0 2px 8px rgba(0,0,0,.2); }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-800);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ─── Hero / Nav ───────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #4c1d95 0%, #0369a1 100%);
+      color: #fff;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px;
+      position: relative; z-index: 1;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.5rem; font-weight: 700; color: #fff;
+      text-decoration: none;
+    }
+    .logo-icon { font-size: 1.8rem; }
+    .nav-badge {
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: .8rem;
+      backdrop-filter: blur(8px);
+    }
+    .hero-content {
+      text-align: center;
+      padding: 60px 24px 80px;
+      position: relative; z-index: 1;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-size: .85rem;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
     .hero h1 span { color: #fcd34d; }
-    .hero-sub { font-size: 1.1rem; opacity: .88; max-width: 560px; margin: 0 auto 12px; }
-    .hero-features { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
-    .hero-feat { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,.12); border-radius: 20px; padding: 6px 16px; font-size: .85rem; }
-    main { max-width: 900px; margin: -40px auto 60px; padding: 0 20px; position: relative; z-index: 2; }
-    .card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden; }
-    .card-header { background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%); color: #fff; padding: 22px 32px; display: flex; align-items: center; gap: 12px; }
+    .hero-sub {
+      font-size: 1.1rem;
+      opacity: .88;
+      max-width: 600px;
+      margin: 0 auto 12px;
+    }
+    .hero-features {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+      margin-top: 28px;
+    }
+    .hero-feat {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: .85rem;
+    }
+
+    /* ─── Main layout ──────────────────────────────────────────── */
+    main {
+      max-width: 900px;
+      margin: -40px auto 0;
+      padding: 0 20px 60px;
+      position: relative; z-index: 2;
+    }
+
+    /* ─── Cards ────────────────────────────────────────────────── */
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .card-header {
+      background: linear-gradient(135deg, var(--violet) 0%, var(--sky) 100%);
+      color: #fff;
+      padding: 22px 32px;
+      display: flex; align-items: center; gap: 12px;
+    }
     .card-header h2 { font-size: 1.2rem; font-weight: 700; }
     .card-header p { font-size: .88rem; opacity: .85; }
     .card-header-icon { width: 44px; height: 44px; background: rgba(255,255,255,.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
     .card-body { padding: 32px; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    /* ─── Form ─────────────────────────────────────────────────── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
     .form-full { grid-column: 1 / -1; }
     .form-group { display: flex; flex-direction: column; gap: 6px; }
     .form-label { font-size: .82rem; font-weight: 600; color: var(--gray-600); text-transform: uppercase; letter-spacing: .04em; display: flex; align-items: center; gap: 6px; }
-    .form-input, .form-select { width: 100%; padding: 11px 14px; border: 1.5px solid var(--gray-200); border-radius: 8px; font-size: .95rem; color: var(--gray-800); background: #fff; transition: border-color .2s, box-shadow .2s; outline: none; appearance: none; }
-    .form-input:focus, .form-select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+    .form-input, .form-select { padding: 11px 14px; border: 1.5px solid var(--gray-200); border-radius: 8px; font-size: .95rem; color: var(--gray-800); background: #fff; transition: border-color .2s, box-shadow .2s; }
+    .form-input:focus, .form-select:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(124,58,237,.12); outline: none; }
     .select-wrap { position: relative; }
     .select-wrap::after { content: '▾'; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--gray-400); pointer-events: none; }
     .form-hint { font-size: .78rem; color: var(--gray-400); }
     .form-error { font-size: .78rem; color: var(--red); display: none; }
     .form-error.visible { display: block; }
-    .segment-group { display: flex; border: 1.5px solid var(--gray-200); border-radius: 8px; overflow: hidden; }
+
+    /* ─── Segment / Radio Groups ───────────────────────────────── */
+    .segment-group {
+      display: flex; border: 1.5px solid var(--gray-200); border-radius: 8px; overflow: hidden;
+    }
     .segment-group input[type="radio"] { display: none; }
-    .segment-group label { flex: 1; text-align: center; padding: 10px 8px; font-size: .85rem; font-weight: 500; cursor: pointer; border-right: 1px solid var(--gray-200); color: var(--gray-600); transition: background .15s, color .15s; display: flex; align-items: center; justify-content: center; gap: 5px; user-select: none; }
+    .segment-group label {
+      flex: 1; text-align: center; padding: 10px 8px; font-size: .85rem; font-weight: 500; cursor: pointer;
+      border-right: 1px solid var(--gray-200); color: var(--gray-600); transition: background .15s, color .15s;
+    }
     .segment-group label:last-of-type { border-right: none; }
-    .segment-group input[type="radio"]:checked + label { background: var(--blue); color: #fff; font-weight: 600; }
-    .btn-generate { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%); color: #fff; border: none; border-radius: 10px; font-size: 1.05rem; font-weight: 700; cursor: pointer; margin-top: 8px; transition: transform .15s, box-shadow .15s, opacity .15s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .btn-generate:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,99,235,.35); }
-    .btn-generate:disabled { opacity: .65; cursor: not-allowed; transform: none; }
-    #loading-section { display: none; }
-    .loading-card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 48px 32px; text-align: center; }
-    .loading-globe { font-size: 4rem; margin-bottom: 20px; display: inline-block; animation: pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-    .loading-title { font-size: 1.4rem; font-weight: 700; color: var(--gray-800); margin-bottom: 8px; }
-    #loading-status { font-size: 1rem; color: var(--blue); font-weight: 500; min-height: 1.5em; margin-bottom: 28px; }
-    .progress-bar-wrap { background: var(--gray-100); border-radius: 999px; height: 6px; overflow: hidden; max-width: 380px; margin: 0 auto 24px; }
-    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--blue), var(--teal)); border-radius: 999px; width: 0%; transition: width 1.2s ease; }
-    .loading-steps { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
-    .loading-step { font-size: .8rem; padding: 4px 12px; border-radius: 20px; background: var(--gray-100); color: var(--gray-400); transition: background .3s, color .3s; }
-    .loading-step.active { background: var(--blue-l); color: var(--blue); font-weight: 600; }
-    .loading-step.done { background: #dcfce7; color: var(--green); }: 600;
+    .segment-group input[type="radio"]:checked + label {
+      background: linear-gradient(135deg, var(--violet) 0%, var(--sky) 100%); color: #fff; font-weight: 600;
     }
 
     /* ─── Submit Button ────────────────────────────────────────── */
     .btn-generate {
       width: 100%;
       padding: 15px;
-      background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%);
+      background: linear-gradient(135deg, var(--violet) 0%, var(--sky) 100%);
       color: #fff;
       border: none;
       border-radius: 10px;
@@ -86,7 +190,7 @@
       display: flex; align-items: center; justify-content: center; gap: 10px;
       letter-spacing: .02em;
     }
-    .btn-generate:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,99,235,.35); }
+    .btn-generate:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124,58,237,.35); }
     .btn-generate:active { transform: translateY(0); }
     .btn-generate:disabled { opacity: .65; cursor: not-allowed; transform: none; box-shadow: none; }
 
@@ -114,7 +218,7 @@
     }
     #loading-status {
       font-size: 1rem;
-      color: var(--blue);
+      color: var(--violet);
       font-weight: 500;
       min-height: 1.5em;
       margin-bottom: 28px;
@@ -130,7 +234,7 @@
     }
     .progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, var(--blue), var(--teal));
+      background: linear-gradient(90deg, var(--violet), var(--sky));
       border-radius: 999px;
       width: 0%;
       transition: width 1.2s ease;
@@ -147,14 +251,14 @@
       color: var(--gray-400);
       transition: background .3s, color .3s;
     }
-    .loading-step.active { background: var(--blue-l); color: var(--blue); font-weight: 600; }
+    .loading-step.active { background: var(--violet-l); color: var(--violet); font-weight: 600; }
     .loading-step.done { background: #dcfce7; color: var(--green); }
 
     /* ─── Itinerary Output ─────────────────────────────────────── */
     #itinerary-section { display: none; }
 
     .itinerary-header {
-      background: linear-gradient(135deg, #1e40af 0%, #0f766e 100%);
+      background: linear-gradient(135deg, #4c1d95 0%, #0369a1 100%);
       border-radius: var(--radius);
       color: #fff;
       padding: 32px;
@@ -204,11 +308,11 @@
     }
     .btn-secondary {
       background: #fff;
-      color: var(--blue);
+      color: var(--violet);
       border: 1.5px solid var(--gray-200);
       box-shadow: 0 1px 4px rgba(0,0,0,.06);
     }
-    .btn-secondary:hover { background: var(--blue-l); border-color: var(--blue); }
+    .btn-secondary:hover { background: var(--violet-l); border-color: var(--violet); }
     .btn-print {
       background: var(--gray-800);
       color: #fff;
@@ -225,7 +329,7 @@
       overflow: hidden;
     }
     .day-header {
-      background: linear-gradient(90deg, var(--blue) 0%, #3b82f6 100%);
+      background: linear-gradient(90deg, var(--violet) 0%, var(--sky) 100%);
       padding: 14px 20px;
       display: flex; align-items: center; gap: 14px;
     }
@@ -264,8 +368,8 @@
       margin-bottom: 10px;
     }
     .slot-morning   .slot-label i { color: #f59e0b; }
-    .slot-afternoon .slot-label i { color: var(--blue); }
-    .slot-evening   .slot-label i { color: #7c3aed; }
+    .slot-afternoon .slot-label i { color: var(--violet); }
+    .slot-evening   .slot-label i { color: #0ea5e9; }
 
     .slot-activity {
       font-weight: 700;
@@ -322,7 +426,7 @@
       color: var(--gray-400);
       font-size: .82rem;
     }
-    footer a { color: var(--blue); text-decoration: none; }
+    footer a { color: var(--violet); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
 
     /* ─── Responsive ───────────────────────────────────────────── */
@@ -354,20 +458,21 @@
 <header class="hero">
   <nav class="nav">
     <a href="/" class="logo">
-      <span class="logo-icon">🗺️</span>
-      <span>EuroJourney</span>
+      <span class="logo-icon">🌍</span>
+      <span>TravelNest</span>
     </a>
     <span class="nav-badge">✨ AI-Powered · Free · No Login</span>
   </nav>
   <div class="hero-content">
-    <div class="hero-eyebrow">🌍 Europe Travel Planner</div>
-    <h1>Plan Your Perfect<br /><span>European Adventure</span></h1>
-    <p class="hero-sub">Personalised, season-aware itineraries crafted by AI — in seconds. From hidden gems to iconic landmarks.</p>
+    <div class="hero-eyebrow">🧭 Global Trip Planner</div>
+    <h1>Plan Your Perfect Trip<br /><span>Anywhere in the World</span></h1>
+    <p class="hero-sub">Personalised, season-aware itineraries for any destination on Earth — crafted by AI in seconds. From hidden villages to iconic capitals.</p>
     <div class="hero-features">
       <div class="hero-feat"><i>🌤️</i> Season-Smart</div>
       <div class="hero-feat"><i>🎭</i> Cultural Events</div>
       <div class="hero-feat"><i>📅</i> Day-by-Day Plans</div>
       <div class="hero-feat"><i>💡</i> Local Insider Tips</div>
+      <div class="hero-feat"><i>🗺️</i> Any Destination</div>
       <div class="hero-feat"><i>🔓</i> No Login Required</div>
     </div>
   </div>
@@ -395,11 +500,28 @@
               <label class="form-label" for="destination"><i class="fa-solid fa-location-dot"></i> Destination</label>
               <input
                 class="form-input" id="destination" name="destination"
-                type="text" placeholder="e.g. Paris, Barcelona, Amalfi Coast, Prague…"
+                type="text" placeholder="e.g. Kyoto, Bali, New York, Marrakech, Patagonia…"
                 autocomplete="off" maxlength="100" required
               />
-              <span class="form-hint">City, region, or country in Europe</span>
+              <span class="form-hint">Any city, region, or country in the world</span>
               <span class="form-error" id="err-destination">Please enter a destination.</span>
+            </div>
+
+            <!-- Region -->
+            <div class="form-group form-full">
+              <label class="form-label" for="region"><i class="fa-solid fa-globe"></i> Region / Continent</label>
+              <div class="select-wrap">
+                <select class="form-select" id="region" name="region">
+                  <option value="worldwide">🌍 Worldwide (let AI decide)</option>
+                  <option value="europe">🏻️ Europe</option>
+                  <option value="asia">🏯 Asia &amp; Pacific</option>
+                  <option value="americas">🗽️ The Americas</option>
+                  <option value="africa">🧁 Africa</option>
+                  <option value="middle-east">🕌 Middle East</option>
+                  <option value="oceania">🦘 Oceania</option>
+                </select>
+              </div>
+              <span class="form-hint">Helps the AI tailor tips to your region</span>
             </div>
 
             <!-- Start Date -->
@@ -418,7 +540,7 @@
 
             <!-- Traveler Type -->
             <div class="form-group">
-              <label class="form-label"><i class="fa-solid fa-users"></i> Traveler Type</label>
+              <label class="form-label"><i class="fa-solid fa-users"></i> Traveller Type</label>
               <div class="segment-group" id="traveler_type">
                 <input type="radio" name="traveler_type" id="tt-solo"   value="solo"   />
                 <label for="tt-solo">🧳 Solo</label>
@@ -450,14 +572,14 @@
               <div class="select-wrap">
                 <select class="form-select" id="interest" name="interest" required>
                   <option value="">Select what matters most to you…</option>
-                  <option value="culture">🎭 Culture & Local Life</option>
-                  <option value="food">🍝 Food & Cuisine</option>
-                  <option value="nature">🌿 Nature & Landscapes</option>
-                  <option value="history">🏛️ History & Heritage</option>
-                  <option value="adventure">🧗 Adventure & Activities</option>
-                  <option value="art">🎨 Art & Museums</option>
-                  <option value="relaxation">🧘 Relaxation & Wellness</option>
-                  <option value="nightlife">🌙 Nightlife & Entertainment</option>
+                  <option value="culture">🎭 Culture &amp; Local Life</option>
+                  <option value="food">🍜 Food &amp; Cuisine</option>
+                  <option value="nature">🌿 Nature &amp; Landscapes</option>
+                  <option value="history">🏛️ History &amp; Heritage</option>
+                  <option value="adventure">🧗 Adventure &amp; Activities</option>
+                  <option value="art">🎨 Art &amp; Museums</option>
+                  <option value="relaxation">🧘 Relaxation &amp; Wellness</option>
+                  <option value="nightlife">🌙 Nightlife &amp; Entertainment</option>
                 </select>
               </div>
               <span class="form-error" id="err-interest">Please choose a primary interest.</span>
@@ -487,7 +609,7 @@
       </div>
       <div class="loading-steps">
         <div class="loading-step" id="step-0">🔍 Researching</div>
-        <div class="loading-step" id="step-1">🗓️ Events</div>
+        <div class="loading-step" id="step-1">🗓️ Highlights</div>
         <div class="loading-step" id="step-2">📅 Activities</div>
         <div class="loading-step" id="step-3">💡 Tips</div>
         <div class="loading-step" id="step-4">✨ Finishing</div>
@@ -528,7 +650,7 @@
 
 <!-- ── Footer ─────────────────────────────────────────────────────── -->
 <footer>
-  <p>🗺️ <strong>EuroJourney</strong> — AI-powered Europe travel planner &nbsp;·&nbsp; Built with <a href="https://www.anthropic.com" target="_blank" rel="noopener">Claude AI</a></p>
+  <p>🌍 <strong>TravelNest</strong> — AI-powered trip planner for anywhere in the world &nbsp;·&nbsp; Built with <a href="https://www.anthropic.com" target="_blank" rel="noopener">Claude AI</a></p>
   <p style="margin-top:6px">No login · No data stored · Every itinerary freshly generated</p>
 </footer>
 
@@ -537,12 +659,9 @@
   // ── Date defaults ─────────────────────────────────────────────
   (function setDefaultDates() {
     const today = new Date();
-    const next30 = new Date(today);
-    next30.setDate(today.getDate() + 30);
-
     const fmt = d => d.toISOString().split('T')[0];
 
-    // Default: start = 30 days from now, end = 37 days from now (1 week trip)
+    // Default: start = 30 days from now, end = 36 days from now (1 week trip)
     const startDefault = new Date(today); startDefault.setDate(today.getDate() + 30);
     const endDefault   = new Date(today); endDefault.setDate(today.getDate() + 36);
 
@@ -568,7 +687,7 @@
   // ── Loading step state ─────────────────────────────────────────
   const stepMessages = [
     'Researching your destination…',
-    'Checking seasonal events & festivals…',
+    'Checking seasonal events & highlights…',
     'Crafting daily activities…',
     'Adding local tips & insights…',
     'Putting the finishing touches…',
@@ -577,14 +696,12 @@
 
   function advanceStep(idx) {
     if (idx > currentStep) {
-      // Mark previous steps done
       for (let i = 0; i < idx; i++) {
         document.getElementById(`step-${i}`)?.classList.remove('active');
         document.getElementById(`step-${i}`)?.classList.add('done');
       }
       document.getElementById(`step-${idx}`)?.classList.add('active');
       currentStep = idx;
-      // Progress bar
       const pct = Math.round(((idx + 1) / stepMessages.length) * 90);
       document.getElementById('progress-bar').style.width = pct + '%';
     }
@@ -672,6 +789,7 @@
 
     const formData = {
       destination:   document.getElementById('destination').value.trim(),
+      region:        document.getElementById('region').value,
       start_date:    document.getElementById('start_date').value,
       end_date:      document.getElementById('end_date').value,
       traveler_type: document.querySelector('input[name="traveler_type"]:checked')?.value || 'couple',
