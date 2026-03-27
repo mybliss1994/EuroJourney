@@ -1,6 +1,6 @@
-# 🗺️ EuroJourney — AI-Powered Europe Travel Planner
+# 🌍 TravelNest — AI Trip Planner for Anywhere in the World
 
-A fully working prototype that generates personalised, season-aware European travel itineraries using Claude AI. No login, no database — just a simple Node.js server and a beautiful single-page frontend.
+A fully working app that generates personalised, season-aware travel itineraries for **any destination on Earth** using Claude AI. No login, no database — just a Node.js server and a single-page frontend.
 
 ---
 
@@ -32,69 +32,80 @@ cp .env.example .env
 node server.js
 ```
 
-Then open **http://localhost:3000** in your browser.
+Then open **http://localhost:3000** in your browser. 🎉
+
+---
+
+## ✨ What's New in v2
+
+- 🌍 **Any destination worldwide** — not just Europe
+- 🗺️ **Region selector** — Europe, Asia & Pacific, The Americas, Africa, Middle East, Oceania
+- 🤖 **Global-aware AI prompt** — cultural etiquette, visa tips, local transport, currency notes
+- 🎨 **Refreshed UI** — new TravelNest branding and colour scheme
 
 ---
 
 ## 📁 Project Structure
 
 ```
-eurojourney/
-+-- server.js
-+-- package.json
-+-- .env.example
-+-- .env
-+-- public/
-    +-- index.html
+travelnest/
+├── server.js          ← Express server + Claude API integration
+├── package.json       ← Dependencies (express, @anthropic-ai/sdk)
+├── .env.example       ← API key template (copy to .env)
+├── .env               ← Your actual API key (never commit this!)
+└── public/
+    └── index.html     ← Complete single-page frontend UI
 ```
 
 ---
 
 ## 💡 How It Works
 
-1. User fills in trip details (destination, dates, traveler type, interests, pace)
-2. Browser sends a POST /api/generate request to the Express server
-3. Server calls Claude's API with a detailed prompt
+1. User fills in trip details (destination, region, dates, traveller type, interests, pace)
+2. Browser sends a `POST /api/generate` request to the Express server
+3. Server calls Claude's API with a detailed, globally-aware prompt
 4. Claude streams back a structured JSON itinerary (season-aware, culturally informed)
-5. Server relays the stream via Server-Sent Events (SSE) to the browser
-6. Frontend renders a beautiful day-by-day itinerary with morning/afternoon/evening cards
+5. Server relays the stream via **Server-Sent Events (SSE)** to the browser
+6. Frontend renders a beautiful day-by-day itinerary with Morning / Afternoon / Evening cards
 
 ---
 
-## Cost Estimate
+## ⚙️ Configuration
 
-- Model: claude-haiku-4-5-20251001 (fastest & cheapest)
-- Cost per itinerary: ~$0.013
-- Free API credits: ~$5 for new accounts (~385 itineraries)
-
----
-
-## Built-in Safeguards
-
-- Rate limiting: 10 requests per IP per 60 seconds
-- Input validation on client and server
-- Max trip length: 30 days
-- Health check: GET /health
+| Variable           | Default | Description                          |
+|--------------------|---------|--------------------------------------|
+| `ANTHROPIC_API_KEY`| —       | **Required.** Your API key           |
+| `PORT`             | `3000`  | Port the server listens on           |
 
 ---
 
-## Deploying to Vercel
+## 💰 Cost Estimate
+
+| Item               | Detail                               |
+|--------------------|--------------------------------------|
+| Model used         | `claude-haiku-4-5-20251001` (fastest & cheapest) |
+| Cost per itinerary | ~$0.001–0.004 depending on trip length |
+| Free API credits   | ~$5 for new accounts                 |
+
+---
+
+## 🛡️ Built-in Safeguards
+
+- **Rate limiting**: 10 requests per IP per 60 seconds (in-memory)
+- **Input validation**: All fields validated on both client and server
+- **Max trip length**: 30 days
+- **Health check**: `GET /health`
+
+---
+
+## 🌐 Deploying to Vercel (Optional)
 
 ```bash
 npm install -g vercel
 vercel
+# Add ANTHROPIC_API_KEY in the Vercel dashboard under Settings → Environment Variables
 ```
-Add ANTHROPIC_API_KEY in the Vercel dashboard.
 
 ---
 
-## Getting Your API Key
-
-1. Go to console.anthropic.com
-2. Sign up (new accounts get ~$5 free credit)
-3. Navigate to API Keys > Create Key
-4. Paste into your .env file
-
----
-
-*Built with Claude AI, Node.js, Express, Vanilla JS*
+*Built with [Claude AI](https://www.anthropic.com) · Node.js · Express · Vanilla JS*
